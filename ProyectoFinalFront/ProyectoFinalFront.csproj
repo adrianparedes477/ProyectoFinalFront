@@ -6,4 +6,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ProyectoFinalFront.Datos\ProyectoFinalFront.Datos.csproj" />
+  </ItemGroup>
+
 </Project>
