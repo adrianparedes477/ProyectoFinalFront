@@ -1,0 +1,11 @@
+﻿@using ProyectoFinalFront.Datos.Dto;
+@model List<Serviciodto>
+
+<h1>Lista de Servicios</h1>
+
+<ul>
+    @foreach (var servicio in Model)
+    {
+        <li>@servicio.Descr - @servicio.Estado - @servicio.ValorHora</li>
+    }
+</ul>
