@@ -7,51 +7,51 @@ using ProyectoFinalFront.ViewModels;
 namespace ProyectoFinalFront.Controllers
 {
     [Authorize]
-    public class UsuariosController : Controller
+    public class TrabajosController : Controller
     {
         private readonly IHttpClientFactory _httpClient;
-        public UsuariosController(IHttpClientFactory httpClient)
+        public TrabajosController(IHttpClientFactory httpClient)
         {
             _httpClient = httpClient;
         }
-        public IActionResult Usuarios()
+        public IActionResult Trabajos()
         {
             return View();
         }
 
-        public async Task<IActionResult> UsuariosAddPartial([FromBody] UsuarioDto usuario)
+        public async Task<IActionResult> TrabajosAddPartial([FromBody] TrabajoDto trabajo)
         {
-            var usuariosViewModel = new UsuariosViewModel();
-            if (usuario != null)
+            var trabajosViewModel = new TrabajosViewModel();
+            if (trabajo != null)
             {
-                usuariosViewModel = usuario;
+                trabajosViewModel = trabajo;
             }
 
-            return PartialView("~/Views/Usuarios/Partial/UsuariosAddPartial.cshtml", usuariosViewModel);
+            return PartialView("~/Views/Trabajos/Partial/TrabajosAddPartial.cshtml", trabajosViewModel);
         }
 
-        public IActionResult GuardarUsuario(UsuarioDto usuario)
+        public IActionResult GuardarTrabajo(TrabajoDto trabajo)
         {
             var token = HttpContext.Session.GetString("Token");
             var baseApi = new BaseApi(_httpClient);
-            var usuarios = baseApi.PostToApi("Usuarios", usuario, token);
-            return View("~/Views/Usuarios/Usuarios.cshtml");
+            var trabajos = baseApi.PostToApi("Trabajos", trabajo, token);
+            return View("~/Views/Trabajos/Trabajos.cshtml");
         }
 
-        public async Task<IActionResult> EliminarUsuario(int id)
+        public async Task<IActionResult> EliminarTrabajo(int id)
         {
             try
             {
                 var token = HttpContext.Session.GetString("Token");
                 var baseApi = new BaseApi(_httpClient);
 
-                await baseApi.DeleteFromApi("Usuarios", id.ToString(), token);
+                await baseApi.DeleteFromApi("Trabajos", id.ToString(), token);
                 return Ok(); // Si se eliminó correctamente
             }
             catch (Exception ex)
             {
                 // Manejo de errores
-                return BadRequest($"Error al eliminar el usuario: {ex.Message}");
+                return BadRequest($"Error al eliminar el trabajo: {ex.Message}");
             }
         }
 

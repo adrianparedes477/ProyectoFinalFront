@@ -1,21 +1,20 @@
 ﻿var token = getCookie("Token");
-let table = new DataTable('#usuarios', {
+let table = new DataTable('#proyectos', {
     ajax: {
-        url: `https://localhost:7284/api/Usuarios?pageNumber=1&pageSize=20`,
+        url: `https://localhost:7284/api/Proyectos?pageNumber=1&pageSize=10`,
         dataSrc: "data",
         headers: { "Authorization": "Bearer " + token }
     },
     columns: [
         { data: 'id', title: 'id', visible: false },
-        { data: 'nombreCompleto', title: 'nombreCompleto' },
-        { data: 'dni', title: 'dni' },
-        { data: 'tipo', title: 'tipo' },
-        { data: 'correo', title: 'correo' },
+        { data: 'nombre', title: 'nombre' },
+        { data: 'direccion', title: 'direccion' },
+        { data: 'estado', title: 'estado' },
         {
             data: function (data) {
                 var botones =
-                    `<td><a href='javascript:EditarUsuario(${JSON.stringify(data)})'><i class="fa-solid fa-pen-to-square editarUsuario"></i></td>` +
-                    `<td><a href='javascript:EliminarUsuario(${data.id})'class='eliminarUsuario'><i class="fa-solid fa-trash eliminarUsuario" data-id='${data.id}'></i></td>`
+                    `<td><a href='javascript:EditarProyecto(${JSON.stringify(data)})'><i class="fa-solid fa-pen-to-square editarProyecto"></i></td>` +
+                    `<td><a href='javascript:EliminarProyecto(${data.id})'class='eliminarProyecto'><i class="fa-solid fa-trash eliminarProyecto" data-id='${data.id}'></i></td>`
                 return botones;
             }
         }
@@ -23,16 +22,16 @@ let table = new DataTable('#usuarios', {
     ]
 });
 
-function AgregarUsuario() {
+function AgregarProyecto() {
     $.ajax({
         type: "GET",
-        url: "/Usuarios/UsuariosAddPartial",
+        url: "/Proyectos/ProyectosAddPartial",
         data: "",
         contentType: 'application/json',
         'dataType': "html",
         success: function (resultado) {
-            $('#usuariosAddPartial').html(resultado);
-            $('#usuarioModal').modal('show');
+            $('#proyectosAddPartial').html(resultado);
+            $('#proyectoModal').modal('show');
         }
 
     });
@@ -40,25 +39,25 @@ function AgregarUsuario() {
 
 
 
-function EditarUsuario(data) {
+function EditarProyecto(data) {
     $.ajax({
         type: "PUT",
-        url: "/Usuarios/UsuariosAddPartial",
+        url: "/Proyectos/ProyectosAddPartial",
         data: JSON.stringify(data),
         headers: { "Authorization": "Bearer " + token },
         contentType: 'application/json',
         'dataType': "html",
         success: function (resultado) {
-            $('#usuariosAddPartial').html(resultado);
-            $('#usuarioModal').modal('show');
+            $('#proyectosAddPartial').html(resultado);
+            $('#proyectoModal').modal('show');
         }
 
     });
 }
 
-function EliminarUsuario(id) {
+function EliminarProyecto(id) {
     swal({
-        title: "¿Está seguro de eliminar el Usuario?",
+        title: "¿Está seguro de eliminar el Proyecto?",
         text: "Este registro no se podrá recuperar",
         icon: "warning",
         buttons: true,
@@ -68,17 +67,17 @@ function EliminarUsuario(id) {
             debugger
             $.ajax({
                 type: "DELETE",  
-                url: `https://localhost:7284/api/Usuarios/${id}`, 
+                url: `https://localhost:7284/api/Proyectos/${id}`, 
                 dataType: 'json',
                 headers: { "Authorization": "Bearer " + token },
                 success: function (resultado) {
                     if (resultado.status === 200) {
                         // La eliminación fue exitosa
-                        toastr.success('Usuario eliminado correctamente');
+                        toastr.success('Proyectos eliminado correctamente');
                         
                     } else {
                         // Hubo un error al eliminar
-                        toastr.error('Error al eliminar el usuario');
+                        toastr.error('Error al eliminar el proyecto');
                     }
                 },
                 error: function () {

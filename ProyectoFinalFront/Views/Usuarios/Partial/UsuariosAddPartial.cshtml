@@ -13,19 +13,19 @@
                     <div class="row">
                         <div class="col-md-6 mt-1 mb-3">
                             <label class="col-md-4 form-control-label">Nombre</label>
-                            @Html.EditorFor(x=> x.NombreCompleto, new {htmlAttributes = new {@class = "col-md-8 form-control" } })
+                            @Html.EditorFor(x=> x.NombreCompleto, new {htmlAttributes = new {@class = "col-md-8 form-control",required = "required" } })
                         </div>
 
                         <div class="col-md-6 mt-1 mb-3">
                             <label class="col-md-2 form-control-label">Dni</label>
-                            @Html.EditorFor(x=> x.Dni, new {htmlAttributes = new {@class = "col-md-8 form-control" } })
+                            @Html.EditorFor(x=> x.Dni, new {htmlAttributes = new {@class = "col-md-8 form-control" , required = "required", min = "1" } })
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-6 mt-1 mb-3">
                             <label class="col-md-5 form-control-label">Correo</label>
-                            @Html.EditorFor(x=> x.correo, new {htmlAttributes = new {@class = "col-md-8 form-control" } })
+                            @Html.EditorFor(x=> x.correo, new {htmlAttributes = new {@class = "col-md-8 form-control",required = "required" } })
                         </div>
 
                         <div class="col-md-6 mt-1 mb-3">
@@ -33,11 +33,12 @@
                             @Html.EditorFor(x=> x.Contrasenia, new {htmlAttributes = new {@class = "col-md-8 form-control" } })
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-6 mt-1 mb-3">
-                            <label class="col-md-5 form-control-label">Tipo</label>
-                            @Html.EditorFor(x=> x.Tipo, new {htmlAttributes = new {@class = "col-md-8 form-control" } })
-                        </div>
+                    <div class="col-md-6 mt-1 mb-3">
+                        <label class="col-md-5 form-control-label">Tipo</label>
+                        <select asp-for="Tipo" class="col-md-8 form-control" required>
+                            <option value="1">Administrador</option>
+                            <option value="2">Consultor</option>
+                        </select>
                     </div>
                 </div>
 

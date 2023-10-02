@@ -1,21 +1,20 @@
 ﻿var token = getCookie("Token");
-let table = new DataTable('#usuarios', {
+let table = new DataTable('#servicios', {
     ajax: {
-        url: `https://localhost:7284/api/Usuarios?pageNumber=1&pageSize=20`,
+        url: `https://localhost:7284/api/Servicios?pageNumber=1&pageSize=10`,
         dataSrc: "data",
         headers: { "Authorization": "Bearer " + token }
     },
     columns: [
         { data: 'id', title: 'id', visible: false },
-        { data: 'nombreCompleto', title: 'nombreCompleto' },
-        { data: 'dni', title: 'dni' },
-        { data: 'tipo', title: 'tipo' },
-        { data: 'correo', title: 'correo' },
+        { data: 'descr', title: 'descr' },
+        { data: 'estado', title: 'estado' },
+        { data: 'valorHora', title: 'valorHora' },
         {
             data: function (data) {
                 var botones =
-                    `<td><a href='javascript:EditarUsuario(${JSON.stringify(data)})'><i class="fa-solid fa-pen-to-square editarUsuario"></i></td>` +
-                    `<td><a href='javascript:EliminarUsuario(${data.id})'class='eliminarUsuario'><i class="fa-solid fa-trash eliminarUsuario" data-id='${data.id}'></i></td>`
+                    `<td><a href='javascript:EditarServicio(${JSON.stringify(data)})'><i class="fa-solid fa-pen-to-square editarServicio"></i></td>` +
+                    `<td><a href='javascript:EliminarServicio(${data.id})'class='eliminarServicio'><i class="fa-solid fa-trash eliminarServicio" data-id='${data.id}'></i></td>`
                 return botones;
             }
         }
@@ -23,16 +22,16 @@ let table = new DataTable('#usuarios', {
     ]
 });
 
-function AgregarUsuario() {
+function AgregarServicio() {
     $.ajax({
         type: "GET",
-        url: "/Usuarios/UsuariosAddPartial",
+        url: "/Servicios/ServiciosAddPartial",
         data: "",
         contentType: 'application/json',
         'dataType': "html",
         success: function (resultado) {
-            $('#usuariosAddPartial').html(resultado);
-            $('#usuarioModal').modal('show');
+            $('#serviciosAddPartial').html(resultado);
+            $('#servicioModal').modal('show');
         }
 
     });
@@ -40,25 +39,25 @@ function AgregarUsuario() {
 
 
 
-function EditarUsuario(data) {
+function EditarServicio(data) {
     $.ajax({
         type: "PUT",
-        url: "/Usuarios/UsuariosAddPartial",
+        url: "/Servicios/ServicioAddPartial",
         data: JSON.stringify(data),
         headers: { "Authorization": "Bearer " + token },
         contentType: 'application/json',
         'dataType': "html",
         success: function (resultado) {
-            $('#usuariosAddPartial').html(resultado);
-            $('#usuarioModal').modal('show');
+            $('#servicioAddPartial').html(resultado);
+            $('#servicioModal').modal('show');
         }
 
     });
 }
 
-function EliminarUsuario(id) {
+function EliminarServicio(id) {
     swal({
-        title: "¿Está seguro de eliminar el Usuario?",
+        title: "¿Está seguro de eliminar el Servicio?",
         text: "Este registro no se podrá recuperar",
         icon: "warning",
         buttons: true,
@@ -68,17 +67,17 @@ function EliminarUsuario(id) {
             debugger
             $.ajax({
                 type: "DELETE",  
-                url: `https://localhost:7284/api/Usuarios/${id}`, 
+                url: `https://localhost:7284/api/Servicios/${id}`, 
                 dataType: 'json',
                 headers: { "Authorization": "Bearer " + token },
                 success: function (resultado) {
                     if (resultado.status === 200) {
                         // La eliminación fue exitosa
-                        toastr.success('Usuario eliminado correctamente');
+                        toastr.success('Servicio eliminado correctamente');
                         
                     } else {
                         // Hubo un error al eliminar
-                        toastr.error('Error al eliminar el usuario');
+                        toastr.error('Error al eliminar el servicio');
                     }
                 },
                 error: function () {

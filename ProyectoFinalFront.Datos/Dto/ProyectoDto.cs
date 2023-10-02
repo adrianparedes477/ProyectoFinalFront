@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace ProyectoFinalFront.Datos.Dto
 {
-    public class Serviciodto
+    public class ProyectoDto
     {
         public int Id { get; set; }
-        public string Descr { get; set; }
-        public bool Estado { get; set; }
-        public decimal ValorHora { get; set; }
+        public string Nombre { get; set; }
+        public string Direccion { get; set; }
+        public string Estado { get; set; } // Cambio de enum a string
     }
 }

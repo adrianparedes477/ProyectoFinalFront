@@ -47,10 +47,7 @@ namespace ProyectoFinalFront.Datos.Base
             {
                 var client = _httpClient.CreateClient("useApi");
 
-                if (token != "")
-                {
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", token);
-                }
+                
 
                 var response = await client.PutAsJsonAsync(controllerName, model);
 
@@ -68,6 +65,30 @@ namespace ProyectoFinalFront.Datos.Base
             }
 
         }
+
+        public async Task<IActionResult> DeleteFromApi(string controllerName, string id, string token = "")
+        {
+            try
+            {
+                var client = _httpClient.CreateClient("useApi");
+
+                var response = await client.DeleteAsync($"{controllerName}/{id}");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    return Ok(content);
+                }
+
+                return Unauthorized();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+
 
     }
 }
